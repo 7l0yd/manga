@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Repository\PostRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
@@ -31,7 +32,7 @@ class DefaultController extends AbstractController
      * Page de détail manga
      * @Route("/detail/{slug<[a-zA-Z0-9_/-]+>}", name="default_detail")
      */
-    public function detail(Post $post)
+    public function detail(Post $post, $slug)
     {
         return $this->render('default/detail.html.twig', [
             'post' => $post
@@ -41,10 +42,18 @@ class DefaultController extends AbstractController
     /**
      * Page résultat de recherche
      * @Route("/result", name="default_result")
+     * @return Response
      */
     public function result()
     {
-        return $this->render('default/result.html.twig');
+
+         $posts = $this->getDoctrine()
+               ->getRepository(Post::class)
+               ->findAll();
+
+        return $this->render('default/result.html.twig', [
+            'posts' => $posts
+        ]);
     }
 
     /**

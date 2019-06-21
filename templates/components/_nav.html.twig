@@ -1,0 +1,55 @@
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="container ">
+            <ul class="navbar-nav d-flex justify-content-around">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('default_accueil') }}">Accueil <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('default_contact') }}">Contact</a>
+                </li>
+
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('membre_deconnexion') }}">Deconnexion</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('membre_inscription') }}">Inscription</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('membre_connexion') }}">Connexion</a>
+                    </li>
+
+                        {% if is_granted('ROLE_MEMBRE') %}
+                            <li class="list-group-item">
+                                <a href="{{ path('manga_create') }}">Rédiger un article</a>
+                            </li>
+                        {% endif %}
+
+               {% endif %}
+            </ul>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <h3 class="text-righ">Bonjour {{ app.user.pseudo}}</h3>
+                    <h4 class="text-righ">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            Administrateur
+                        {% elseif is_granted('ROLE_MEMBRE') %}
+                            Auteur
+                        {% else %}
+                            Abonné(e)
+                        {% endif %}
+                    </h4>
+                {% endif %}
+    </div>
+</div>
+</nav>
+
+
+
+

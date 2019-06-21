@@ -186,7 +186,7 @@ class MembreController extends AbstractController
     }
 
     /**
-     * @Route("/deconnexion", name="deconnexion")
+     * @Route("/deconnexion", name="membre_deconnexion")
      */
     public function deconnexion()
     {
